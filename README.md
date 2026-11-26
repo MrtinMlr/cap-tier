@@ -1,65 +1,137 @@
-# cap-tier
+<p align="center">
+  <img src="logo.svg" alt="cap-tier logo" width="72" height="58">
+</p>
 
-**Tiny capability tiers for the web — `low` / `mid` / `high`, under 2 KB.**
+<h1 align="center">cap-tier</h1>
+
+<p align="center">Tiny capability tiers for the web — <code>low</code> / <code>mid</code> / <code>high</code>, under 2 KB.</p>
+
+<p align="center">
+  <a href="https://mrtinmlr.github.io/cap-tier/"><strong>Explore the live demo »</strong></a>
+</p>
+
+<p align="center">
+  <a href="https://github.com/MrtinMlr/cap-tier/releases"><img src="https://img.shields.io/badge/version-0.1.0-blue" alt="version 0.1.0"></a>
+  <a href="https://mrtinmlr.github.io/cap-tier/"><img src="https://img.shields.io/badge/demo-live-brightgreen" alt="live demo"></a>
+  <img src="https://img.shields.io/badge/size-1.8%20KB%20min-blueviolet" alt="1.8 KB minified">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green" alt="MIT license"></a>
+</p>
 
 A snippet that sets `data-tier="low|mid|high"` on `<html>` **before first paint**, so your CSS can turn off blur, heavy animation and 3D on weak devices — and your JS can skip heavy imports entirely. No dependencies, no network, no build step.
 
-## Why
+## Table of contents
 
-Mobile web performance is bad on low-end phones, and hundreds of millions of people browse on ≤2 GB Android devices — yet most sites ship the same heavy experience to everyone. Google built this exact idea in 2019 ("adaptive loading", web.dev) and the signals it relies on (`navigator.deviceMemory`, `hardwareConcurrency`, `connection.effectiveType`) are still Chromium-only, so it never became a standard library. The honest version of the idea is narrow: **gate effects, not payload.** This snippet does exactly that, and nothing more. It will not fix a 2 MB page — it makes a well-built page cheaper to render on a weak phone.
+- [Quick start](#quick-start)
+- [Status](#status)
+- [What's included](#whats-included)
+- [How it works](#how-it-works)
+- [Tiers](#tiers)
+- [API](#api)
+- [Why cap-tier](#why-cap-tier)
+- [Documentation](#documentation)
+- [Bugs and feature requests](#bugs-and-feature-requests)
+- [Contributing](#contributing)
+- [Versioning](#versioning)
+- [Copyright and license](#copyright-and-license)
 
-## Install
+## Quick start
 
-Copy `cap-tier.js` (or `cap-tier.min.js`) and `cap-tier.css` into your project. Put the script in `<head>` **before any render-blocking CSS**, so the tier is set before first paint:
+Several quick start options are available:
 
-```html
-<head>
-  <script src="cap-tier.min.js"></script>
-  <link rel="stylesheet" href="your-styles.css">
-  <link rel="stylesheet" href="cap-tier.css">
-</head>
+- **CDN (easiest — like Bootstrap's CDN):**
+  ```html
+  <script src="https://cdn.jsdelivr.net/gh/MrtinMlr/cap-tier@main/cap-tier.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/MrtinMlr/cap-tier@main/cap-tier.css">
+  ```
+  Put the `<script>` in `<head>` **before your CSS** — the tier must be set before first paint.
+- **Download the latest release:** [cap-tier.zip](https://github.com/MrtinMlr/cap-tier/archive/refs/heads/main.zip)
+- **Clone the repo:** `git clone https://github.com/MrtinMlr/cap-tier.git`
+- **Install with npm:** `npm install cap-tier` — the name is free on npm but the package isn't published yet. Until then, use the CDN links above.
+
+Read the [live demo / docs](https://mrtinmlr.github.io/cap-tier/) for the interactive demo, the stress test, and copy-paste snippets.
+
+## Status
+
+**v0.1.0 — prototype.** Static tier detection is smoke-tested (weak 2-core/2 GB → `low`, strong 8-core/8 GB → `high`, `?cap=low` overrides, `prefers-reduced-motion` and `saveData` force `low`). The FPS downgrade path is **verified in a real browser** (headless Chrome, Nov 2026: `mid` → `low` under real per-frame load, both at load time and via `CapTier.recheck()`). The static signals (`deviceMemory`, `hardwareConcurrency`, `effectiveType`) are Chromium-only — other browsers fall back to mid-range defaults.
+
+## What's included
+
+Within the download you'll find the following files:
+
+```
+cap-tier/
+├── cap-tier.js       # readable source (2.6 KB)
+├── cap-tier.min.js   # minified (1.8 KB)
+├── cap-tier.css      # companion stylesheet (648 B)
+├── index.html        # docs + interactive demo (GitHub Pages)
+├── logo.svg          # logo
+├── LICENSE           # MIT
+└── README.md
 ```
 
 ## How it works
 
-1. **Initial tier (static signals):** `hardwareConcurrency` + `deviceMemory` (+ `saveData` / slow `effectiveType`). `prefers-reduced-motion: reduce` forces `low`. Chromium-only signals are guarded — on browsers that don't expose them, the defaults assume a mid-range device.
-2. **Runtime check (FPS):** ~2 s of `requestAnimationFrame` sampling after `load`. If average FPS is under 30, the tier drops **one level**. It can only downgrade, never upgrade — so the page never flickers back to heavy effects.
+1. **Initial tier (static signals):** `hardwareConcurrency` + `deviceMemory` (+ `saveData` / slow `effectiveType`). `prefers-reduced-motion: reduce` forces `low`.
+2. **Runtime check (FPS):** ~2 s of `requestAnimationFrame` sampling after `load`. If average FPS is under 30, the tier drops **one level**. It can only downgrade, never upgrade — so the page never flickers back to heavy effects. `CapTier.recheck()` re-runs the check on demand.
 3. **Manual override wins:** `?cap=low|mid|high`, `localStorage["cap-tier"]`, or `window.CapTier.set("low")`. An override locks the tier (no FPS downgrade).
 
-```js
-CapTier.tier();      // "low" | "mid" | "high"
-CapTier.set("low");  // force low, remembers it in localStorage
-```
+## Tiers
 
-## CSS hooks
+| Tier | Blur | Heavy animation | 3D | Heavy JS imports |
+| --- | --- | --- | --- | --- |
+| `low` | solid tint | off | off | skip |
+| `mid` | kept | off | kept | your call |
+| `high` | kept | kept | kept | load |
 
-The script sets both `data-tier` and a `cap-low` / `cap-mid` / `cap-high` class on `<html>`. The companion stylesheet (`cap-tier.css`) does the obvious thing:
-
-- **low:** blur becomes a solid tint (`--glass-fallback`), heavy animation off, 3D transforms off.
-- **mid:** blur kept, heavy animation off.
-- **high:** everything as designed.
+The script sets both `data-tier` and a `cap-low` / `cap-mid` / `cap-high` class on `<html>`. The companion stylesheet does the obvious thing:
 
 ```css
 [data-tier="low"] .glass { backdrop-filter: none; background: var(--glass-fallback, rgba(20,20,24,.92)); }
 [data-tier="mid"] .anim-heavy { animation: none; }
 ```
 
-## Size
+Define `--glass-fallback` to choose the solid color low-tier devices get instead of blur.
 
-| file | bytes |
+## API
+
+| Call | Does what |
 | --- | --- |
-| `cap-tier.js` | 2,305 |
-| `cap-tier.min.js` | 1,663 (with license banner) |
-| `cap-tier.css` | 648 |
+| `CapTier.tier()` | returns `"low" \| "mid" \| "high"` |
+| `CapTier.set("low")` | forces a tier, remembers it in `localStorage` |
+| `CapTier.recheck()` | re-runs the ~2 s FPS check on demand (downgrade-only) |
+| `?cap=low` | URL override — handy for testing |
 
-## Status — v0.1, prototype
+```js
+// Skip heavy work entirely on weak devices
+if (CapTier.tier() !== "low") {
+  import("./heavy-3d.js");
+}
+```
 
-- Static tier detection is smoke-tested (weak 2-core/2 GB → `low`, strong 8-core/8 GB → `high`, `?cap=low` overrides, `prefers-reduced-motion` and `saveData` force `low`).
-- **The FPS downgrade path is written but not yet tested in a real browser.** Don't trust it until it is.
-- Not production-hardened. Use it, break it, tell us what happened.
+## Why cap-tier
 
-Try it: open [`demo.html`](demo.html) (or the GitHub Pages page) and force tiers with `?cap=low`.
+The name is the idea: **cap** = capability (how powerful the device is), **tier** = a tier, like Bootstrap's breakpoint tiers — except Bootstrap's tiers switch *layout* by screen width (`xs / sm / md / lg / xl`), and cap-tier's tiers switch *effects* by device power (`low / mid / high`). Same mental model, different axis.
 
-## License
+Mobile web performance is bad on low-end phones, and hundreds of millions of people browse on ≤2 GB Android devices — yet most sites ship the same heavy experience to everyone. Google built this exact idea in 2019 ("adaptive loading") and the signals it relies on are still Chromium-only, so it never became a standard library. The honest version of the idea is narrow: **it gates effects, not payload.** It will not fix a 2 MB page — it makes a well-built page cheaper to render on a weak phone.
 
-MIT — see [LICENSE](LICENSE).
+The name `cap-tier` was checked before publishing: no JavaScript library or CSS framework uses it, no npm package exists under that name, and the only GitHub repository with that exact name is this one. (The phrase "cap tier" also exists in finance, for market-capitalization tiers — a different world, unrelated to this project.)
+
+## Documentation
+
+cap-tier's documentation is the demo page in this repo, hosted on GitHub Pages at <https://mrtinmlr.github.io/cap-tier/> — interactive demo, stress test, and copy-paste install snippets included.
+
+## Bugs and feature requests
+
+Have a bug or a feature request? Please first search for existing and closed issues. If your problem or idea is not addressed yet, [please open a new issue](https://github.com/MrtinMlr/cap-tier/issues/new).
+
+## Contributing
+
+Small and focused beats big and clever — that's the whole point of this library. If you want to contribute: keep it dependency-free, keep the minified build under 2 KB, keep the downgrade-only rule, and include a test for any behavior change (see the smoke test notes in the repo). Pull requests are welcome.
+
+## Versioning
+
+For transparency into the release cycle and in striving to maintain backward compatibility, cap-tier is maintained under [the Semantic Versioning guidelines](https://semver.org/). See [the Releases section](https://github.com/MrtinMlr/cap-tier/releases) for changelogs.
+
+## Copyright and license
+
+Code and documentation copyright 2026 Martin Miller. Code released under the [MIT License](LICENSE).
