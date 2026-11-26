@@ -8,43 +8,67 @@
 <link rel="icon" href="logo.svg" type="image/svg+xml">
 <script src="cap-tier.js"></script>
 <link rel="stylesheet" href="cap-tier.css">
+<script type="importmap">
+{ "imports": {
+  "react": "./vendor/react.mjs",
+  "react/jsx-runtime": "./vendor/jsx-runtime.mjs",
+  "react-dom": "./vendor/react-dom.mjs",
+  "react-dom/client": "./vendor/react-dom-client.mjs",
+  "scheduler": "./vendor/scheduler.mjs",
+  "glisse": "./vendor/glisse.mjs"
+} }
+</script>
 <style>
-  :root { --glass-fallback: rgba(22, 22, 30, .94); --ink: #f4f4f7; --muted: rgba(244,244,247,.72); --line: rgba(255,255,255,.16); --accent: #a78bfa; }
+  :root { --ink: #f4f4f7; --muted: rgba(244,244,247,.72); --line: rgba(255,255,255,.16);
+    --card-bg: rgba(255,255,255,.08); --btn-bg: rgba(255,255,255,.14); --btn-ink: #fff;
+    --chip-bg: rgba(0,0,0,.25); --link: #fff; --glass-fallback: rgba(22, 22, 30, .94);
+    --page-bg: linear-gradient(135deg, #1e1b4b, #7c3aed 45%, #db2777 80%, #f59e0b);
+    --stage-bg: rgba(0,0,0,.28); }
+  html[data-tier="low"] { --ink: #17171c; --muted: rgba(23,23,28,.66); --line: rgba(0,0,0,.14);
+    --card-bg: rgba(0,0,0,.045); --btn-bg: rgba(0,0,0,.06); --btn-ink: #17171c;
+    --chip-bg: rgba(0,0,0,.06); --link: #1d4ed8; --glass-fallback: rgba(255,255,255,.92);
+    --page-bg: #ffffff; --stage-bg: #ececf1; }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   body { margin: 0; font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color: var(--ink);
-    background: linear-gradient(135deg, #1e1b4b, #7c3aed 45%, #db2777 80%, #f59e0b); background-attachment: fixed; min-height: 100vh; }
-  a { color: #fff; }
+    background: var(--page-bg); background-attachment: fixed; min-height: 100vh; }
+  a { color: var(--link); }
   main { max-width: 760px; margin: 0 auto; padding: 20px 16px 40px; }
+  .bg-fx { display: none; position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+  html[data-tier="high"] .bg-fx { display: block; }
+  .bg-orb { position: absolute; border-radius: 50%; filter: blur(90px); opacity: .5; animation: bgdrift 16s ease-in-out infinite alternate; }
+  .bg-orb.o1 { width: 60vmax; height: 60vmax; background: #db2777; top: -20vmax; left: -10vmax; }
+  .bg-orb.o2 { width: 50vmax; height: 50vmax; background: #0ea5e9; bottom: -18vmax; right: -12vmax; animation-duration: 20s; animation-delay: -4s; }
+  .bg-orb.o3 { width: 38vmax; height: 38vmax; background: #f59e0b; top: 32%; left: 42%; animation-duration: 12s; animation-delay: -2s; }
+  @keyframes bgdrift { from { transform: translate(0,0) scale(1); } to { transform: translate(7vmax, 5vmax) scale(1.18); } }
   .site-header { position: sticky; top: 0; z-index: 100; }
-  .site-header .inner { max-width: 960px; margin: 0 auto; padding: 10px 16px; display: flex; align-items: center; gap: 10px; }
-  .site-header img { width: 30px; height: 30px; }
-  .site-header b { font-size: 18px; letter-spacing: -.5px; }
-  .site-header nav { margin-left: auto; display: flex; gap: 16px; font-size: 14px; align-items: center; }
-  .site-header nav a { opacity: .85; text-decoration: none; }
+  .site-header .inner { max-width: 960px; margin: 0 auto; padding: 16px 20px; display: flex; align-items: center; gap: 12px; }
+  .site-header img { width: 42px; height: 42px; }
+  .site-header nav { margin-left: auto; display: flex; gap: 16px; font-size: 15px; align-items: center; }
+  .site-header nav a { opacity: .85; text-decoration: none; color: var(--ink); }
   .site-header nav a:hover { opacity: 1; text-decoration: underline; }
-  .tier-pill { font-size: 12px; font-weight: 700; text-transform: uppercase; border-radius: 999px; padding: 3px 12px; background: #a78bfa; color: #1e1b4b; white-space: nowrap; }
+  .tier-pill { font-size: 13px; font-weight: 700; border: 0; border-radius: 999px; padding: 6px 14px; background: #a78bfa; color: #1e1b4b; white-space: nowrap; cursor: pointer; font: inherit; }
   .tier-pill.low { background: #f59e0b; }
   .tier-pill.mid { background: #a78bfa; }
   .tier-pill.high { background: #34d399; }
   h1 { font-size: clamp(34px, 6vw, 52px); line-height: 1.08; letter-spacing: -1.5px; margin: 8px 0 12px; }
   .lede { font-size: 19px; color: var(--muted); margin: 0 0 20px; max-width: 60ch; }
   .badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
-  .badge { font-size: 13px; border: 1px solid var(--line); border-radius: 999px; padding: 3px 12px; background: rgba(0,0,0,.25); }
+  .badge { font-size: 13px; border: 1px solid var(--line); border-radius: 999px; padding: 3px 12px; background: var(--chip-bg); }
   .btns { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 8px; }
-  button, a.btn { font: inherit; cursor: pointer; border: 1px solid rgba(255,255,255,.4); border-radius: 999px;
-    background: rgba(255,255,255,.14); color: #fff; padding: 9px 18px; text-decoration: none; display: inline-block; }
-  button:hover, a.btn:hover { background: rgba(255,255,255,.26); }
+  button, a.btn { font: inherit; cursor: pointer; border: 1px solid var(--line); border-radius: 999px;
+    background: var(--btn-bg); color: var(--btn-ink); padding: 9px 18px; text-decoration: none; display: inline-block; }
+  button:hover, a.btn:hover { filter: brightness(1.12); }
   button:disabled { opacity: .45; cursor: not-allowed; }
-  button.primary { background: #fff; color: #3b0764; border-color: #fff; font-weight: 600; }
-  button.primary:hover { background: #ede9fe; }
+  button.primary { background: #fff; color: #3b0764; border-color: var(--line); font-weight: 600; box-shadow: 0 1px 6px rgba(0,0,0,.12); }
+  button.primary:hover { background: #ede9fe; filter: none; }
   button.small { padding: 5px 14px; font-size: 13.5px; }
   section { margin-top: 44px; }
   h2 { font-size: 24px; letter-spacing: -.5px; margin: 0 0 12px; }
   h3 { font-size: 17px; margin: 20px 0 8px; }
-  .card { border-radius: 16px; padding: 20px; margin-bottom: 16px; background: rgba(255,255,255,.08); }
+  .card { border-radius: 16px; padding: 20px; margin-bottom: 16px; background: var(--card-bg); }
   .glass { backdrop-filter: blur(18px) saturate(160%); -webkit-backdrop-filter: blur(18px) saturate(160%);
-    background: rgba(20, 20, 28, .45); border: 1px solid rgba(255,255,255,.25); }
+    background: rgba(20, 20, 28, .45); border: 1px solid var(--line); }
   .tier { font-size: 60px; font-weight: 800; line-height: 1; letter-spacing: -2px; text-transform: uppercase; }
   .tier small { display: block; font-size: 14px; font-weight: 400; letter-spacing: 0; color: var(--muted); margin-top: 8px; text-transform: none; }
   table { width: 100%; border-collapse: collapse; font-size: 14px; }
@@ -53,29 +77,37 @@
   th { opacity: .75; font-weight: 600; }
   .note { font-size: 13px; color: var(--muted); }
   code, pre { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; }
-  pre { background: rgba(0,0,0,.4); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; overflow-x: auto; font-size: 13.5px; line-height: 1.55; margin: 0; }
+  pre { background: rgba(0,0,0,.4); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; overflow-x: auto; font-size: 13.5px; line-height: 1.55; margin: 0; color: #f4f4f7; }
   pre code { background: none; padding: 0; }
   code { background: rgba(0,0,0,.3); padding: 1px 6px; border-radius: 6px; font-size: .88em; }
+  html[data-tier="low"] code { background: rgba(0,0,0,.08); }
   .snippet { position: relative; margin-bottom: 14px; }
-  .snippet button { position: absolute; top: 8px; right: 8px; padding: 4px 12px; font-size: 12.5px; }
-  .stage { position: relative; height: 440px; border-radius: 24px; overflow: hidden; background: rgba(0,0,0,.28); border: 1px solid var(--line); margin-bottom: 14px; }
+  .snippet button { position: absolute; top: 8px; right: 8px; padding: 4px 12px; font-size: 12.5px; background: rgba(255,255,255,.14); color: #fff; border-color: rgba(255,255,255,.4); }
+  .stage { position: relative; height: 440px; border-radius: 24px; overflow: hidden; background: var(--stage-bg); border: 1px solid var(--line); margin-bottom: 14px; }
   .blob { position: absolute; width: 280px; height: 280px; border-radius: 50%; filter: blur(70px); opacity: .75; animation: drift 9s ease-in-out infinite alternate; }
   .blob.b1 { background: #db2777; top: -60px; left: -40px; }
   .blob.b2 { background: #7c3aed; bottom: -80px; right: -30px; animation-duration: 11s; animation-delay: -3s; }
   .blob.b3 { background: #f59e0b; top: 28%; left: 38%; width: 200px; height: 200px; animation-duration: 7s; animation-delay: -5s; }
   @keyframes drift { from { transform: translate(0,0) scale(1); } to { transform: translate(46px, 30px) scale(1.15); } }
   #particles { position: absolute; inset: 0; width: 100%; height: 100%; }
-  .cube-scene { position: absolute; left: 50%; top: 40%; width: 130px; height: 130px; margin: -65px 0 0 -65px; perspective: 800px; z-index: 3; }
-  .cube { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; animation: spin 9s linear infinite; }
+  html[data-tier="low"] .blob, html[data-tier="low"] .orb, html[data-tier="low"] #particles { display: none; }
+  .liquid-lens { position: absolute; right: 18px; top: 16px; width: 180px; padding: 14px; border-radius: 20px; z-index: 5; font-size: 13.5px; line-height: 1.45;
+    backdrop-filter: url(#liquid) blur(3px) saturate(1.6); -webkit-backdrop-filter: url(#liquid) blur(3px) saturate(1.6);
+    background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.35); }
+  html[data-tier="low"] .liquid-lens, html[data-tier="mid"] .liquid-lens { backdrop-filter: none; -webkit-backdrop-filter: none; }
+  html[data-tier="low"] .liquid-lens { background: rgba(255,255,255,.88); border-color: var(--line); }
+  .cube-scene { position: absolute; left: 50%; top: 40%; width: 150px; height: 150px; margin: -75px 0 0 -75px; perspective: 800px; z-index: 3; }
+  .cube { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; animation: spin var(--cube-speed, 9s) linear infinite; }
   @keyframes spin { from { transform: rotateX(-18deg) rotateY(0); } to { transform: rotateX(-18deg) rotateY(360deg); } }
-  .face { position: absolute; inset: 0; display: grid; place-items: center; font-weight: 800; font-size: 15px; color: #fff;
+  .face { position: absolute; inset: 0; display: grid; place-items: center; font-weight: 800; font-size: 16px; color: #fff;
     background: rgba(124, 58, 237, .35); border: 1px solid rgba(255,255,255,.5); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
-  .face.f1 { transform: translateZ(65px); }
-  .face.f2 { transform: rotateY(90deg) translateZ(65px); background: rgba(219,39,119,.35); }
-  .face.f3 { transform: rotateY(180deg) translateZ(65px); }
-  .face.f4 { transform: rotateY(-90deg) translateZ(65px); background: rgba(245,158,11,.35); }
-  .face.f5 { transform: rotateX(90deg) translateZ(65px); background: rgba(52,211,153,.3); }
-  .face.f6 { transform: rotateX(-90deg) translateZ(65px); background: rgba(167,139,250,.35); }
+  .face.f1 { transform: translateZ(75px); }
+  .face.f2 { transform: rotateY(90deg) translateZ(75px); background: rgba(219,39,119,.35); }
+  .face.f3 { transform: rotateY(180deg) translateZ(75px); }
+  .face.f4 { transform: rotateY(-90deg) translateZ(75px); background: rgba(245,158,11,.35); }
+  .face.f5 { transform: rotateX(90deg) translateZ(75px); background: rgba(52,211,153,.3); }
+  .face.f6 { transform: rotateX(-90deg) translateZ(75px); background: rgba(167,139,250,.35); }
+  html[data-tier="low"] .face { color: #1e1b4b; border-color: rgba(0,0,0,.25); }
   .orb { position: absolute; width: 26px; height: 26px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #fff, #a78bfa 60%, transparent); box-shadow: 0 0 22px rgba(167,139,250,.9); animation: floaty 2.4s ease-in-out infinite alternate; z-index: 2; }
   .orb.o1 { left: 12%; top: 20%; }
   .orb.o2 { right: 14%; top: 26%; animation-delay: -.8s; }
@@ -85,6 +117,9 @@
   .stage-cards { position: absolute; left: 16px; right: 16px; bottom: 14px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; z-index: 4; }
   .stage-cards .card { margin: 0; padding: 14px; font-size: 13.5px; line-height: 1.45; }
   .pill { display: inline-block; font-size: 12px; font-weight: 700; border-radius: 999px; padding: 2px 10px; background: rgba(255,255,255,.18); }
+  html[data-tier="low"] .pill { background: rgba(0,0,0,.08); }
+  #glisseIsland { margin-bottom: 16px; }
+  #glisseIsland:empty { display: none; }
   .site-footer { margin: 64px auto 0; max-width: 960px; padding: 0 16px 40px; }
   .site-footer .panel { border-radius: 20px; padding: 24px; }
   .site-footer .cols { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 20px; }
@@ -98,19 +133,20 @@
     .stage { height: 560px; }
     .stage-cards { grid-template-columns: 1fr; }
     .cube-scene { top: 32%; }
+    .liquid-lens { width: 140px; padding: 10px; font-size: 12.5px; }
     .site-header nav a { display: none; }
     .site-footer .cols { grid-template-columns: 1fr; }
   }
 </style>
 </head>
 <body>
+<div class="bg-fx" aria-hidden="true"><div class="bg-orb o1"></div><div class="bg-orb o2"></div><div class="bg-orb o3"></div></div>
 <header class="site-header glass">
   <div class="inner">
-    <img src="logo.svg" alt="cap-tier logo">
-    <b>cap-tier</b>
+    <img src="logo.svg" alt="cap-tier">
     <nav>
-      <a href="#stage">Stage</a><a href="#demo">Demo</a><a href="#install">Install</a><a href="#usage">Usage</a><a href="https://github.com/MrtinMlr/cap-tier">GitHub</a>
-      <span class="tier-pill" id="headerTier">tier: …</span>
+      <a href="#stage">Stage</a><a href="#liquid">Liquid glass</a><a href="#demo">Demo</a><a href="#install">Install</a><a href="#usage">Usage</a><a href="https://github.com/MrtinMlr/cap-tier">GitHub</a>
+      <button class="tier-pill" id="headerTier" type="button" title="Click to change tier">… fps · …</button>
     </nav>
   </div>
 </header>
@@ -122,12 +158,13 @@
   </div>
   <div class="btns">
     <a class="btn primary" href="#stage">See the heavy stage ↓</a>
+    <a class="btn" href="#liquid">Liquid glass ↓</a>
     <a class="btn" href="#install">Get started</a>
   </div>
 
   <section id="stage">
     <h2>The heavy stage — real weight, not a mockup</h2>
-    <p class="note">Three giant blurred gradient blobs drifting, a spinning 3D glass cube, 130 canvas particles, floating orbs, glass cards — all of it real, all of it gated by the tier. On <code>high</code> everything moves. On <code>mid</code> the blobs and orbs freeze. On <code>low</code> everything freezes, the cube flattens, the glass goes solid and the particles stop. Try it:</p>
+    <p class="note">Three giant blurred gradient blobs drifting, a spinning 3D glass cube, 130 canvas particles, floating orbs, glass cards, and a liquid-glass lens that refracts what's behind it — all of it real, all of it gated by the tier. On <code>high</code> everything moves. On <code>mid</code> the blobs and orbs freeze. On <code>low</code> the background goes plain white, the blobs and particles vanish, the cube flattens and the glass goes solid. Try it — tap the FPS pill in the header:</p>
     <div class="btns">
       <button class="small" data-set="low">Force low</button>
       <button class="small" data-set="mid">Force mid</button>
@@ -135,6 +172,14 @@
       <button class="small" id="clearBtn2">Clear override</button>
     </div>
     <div class="stage">
+      <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+        <filter id="liquid" x="-20%" y="-20%" width="140%" height="140%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.012 0.02" numOctaves="2" seed="7" result="n">
+            <animate attributeName="baseFrequency" dur="6s" values="0.012 0.02;0.02 0.012;0.012 0.02" repeatCount="indefinite"/>
+          </feTurbulence>
+          <feDisplacementMap in="SourceGraphic" in2="n" scale="26"/>
+        </filter>
+      </defs></svg>
       <div class="blob b1 anim-heavy"></div>
       <div class="blob b2 anim-heavy"></div>
       <div class="blob b3 anim-heavy"></div>
@@ -142,6 +187,7 @@
       <div class="orb o1 anim-heavy"></div>
       <div class="orb o2 anim-heavy"></div>
       <div class="orb o3 anim-heavy"></div>
+      <div class="liquid-lens"><strong>Liquid glass</strong><br><span class="note">SVG refraction — the blobs bend through this lens. Only on high.</span></div>
       <div class="cube-scene">
         <div class="cube anim-3d">
           <div class="face f1">low</div>
@@ -158,7 +204,17 @@
         <div class="card glass"><strong>Real 3D</strong><br><span class="note">A spinning cube, preserve-3d. Flat on low.</span></div>
       </div>
     </div>
-    <p class="note">The particles are JS-gated too: they only animate when the tier isn't <code>low</code> — the same <code>if (CapTier.tier() !== "low")</code> pattern you'd use for a 3D library. Watch the live FPS in the table below while the stage is running.</p>
+    <p class="note">The particles are JS-gated too: they only animate when the tier isn't <code>low</code> — the same <code>if (CapTier.tier() !== "low")</code> pattern you'd use for a 3D library. Watch the live FPS in the header while the stage is running.</p>
+  </section>
+
+  <section id="liquid">
+    <h2>Liquid glass, for real — glisse</h2>
+    <p class="note">This panel is <a href="https://github.com/0kzh/glisse">glisse</a> — Apple's Liquid Glass for the web, as React components. It only mounts on <code>high</code>: the ~300&nbsp;KB of React + glisse in <code>vendor/</code> never downloads on weaker tiers. That's the JS-gating pattern cap-tier is for — skip the heavy import entirely. (expo-glass-effect is the native iOS version for Expo apps — it can't run in a web page at all, so it's not here; glisse is the web equivalent.)</p>
+    <div id="glisseIsland" data-theme="dark"></div>
+    <div class="card glass" id="glisseFallback">
+      <p style="margin:0 0 10px">Glisse isn't loaded on this tier — the heavy components stay unmounted.</p>
+      <button class="small" data-set="high">Force high to mount it</button>
+    </div>
   </section>
 
   <section id="demo">
@@ -186,7 +242,7 @@
         <button data-set="high">Force high</button>
         <button id="clearBtn">Clear override</button>
       </div>
-      <p class="note">Or open with <a href="?cap=low">?cap=low</a> · <a href="?cap=mid">?cap=mid</a> · <a href="?cap=high">?cap=high</a>. An override locks the tier — the FPS check won't change it.</p>
+      <p class="note">Or open with <a href="?cap=low">?cap=low</a> · <a href="?cap=mid">?cap=mid</a> · <a href="?cap=high">?cap=high</a>. An override locks the tier — the FPS check won't change it. The header pill does the same thing: tap it to cycle low → mid → high.</p>
       <h3>Stress test — watch the tier drop</h3>
       <div class="btns">
         <button id="stressBtn">▶ Simulate heavy load</button>
@@ -195,10 +251,10 @@
     </div>
 
     <table>
-      <tr><th>Tier</th><th>Blur</th><th>Heavy animation</th><th>3D</th></tr>
-      <tr><td><span class="pill">low</span></td><td>solid tint</td><td>off</td><td>off</td></tr>
-      <tr><td><span class="pill">mid</span></td><td>kept</td><td>off</td><td>kept</td></tr>
-      <tr><td><span class="pill">high</span></td><td>kept</td><td>kept</td><td>kept</td></tr>
+      <tr><th>Tier</th><th>Background</th><th>Blur</th><th>Heavy animation</th><th>3D</th></tr>
+      <tr><td><span class="pill">low</span></td><td>plain white</td><td>solid tint</td><td>off</td><td>off</td></tr>
+      <tr><td><span class="pill">mid</span></td><td>gradient</td><td>kept</td><td>off</td><td>kept</td></tr>
+      <tr><td><span class="pill">high</span></td><td>animated liquid</td><td>kept</td><td>kept</td><td>kept</td></tr>
     </table>
   </section>
 
@@ -291,14 +347,19 @@ if (CapTier.tier() !== "low") {
 (function () {
   var $ = function (id) { return document.getElementById(id); };
   var stressOn = false;
+  var lastFps = null;
+  function updatePill() {
+    var t = CapTier.tier();
+    var hp = $('headerTier');
+    hp.textContent = (lastFps === null ? '… fps' : lastFps + ' fps') + ' · ' + t;
+    hp.className = 'tier-pill ' + t;
+  }
   function render() {
     var t = document.documentElement.getAttribute('data-tier') || CapTier.tier();
     $('tier').firstChild.nodeValue = t;
-    $('tierNote').textContent = t === 'low' ? 'blur → solid tint, animations & 3D off'
-      : t === 'mid' ? 'blur kept, heavy animation off' : 'everything as designed';
-    var hp = $('headerTier');
-    hp.textContent = 'tier: ' + t;
-    hp.className = 'tier-pill ' + t;
+    $('tierNote').textContent = t === 'low' ? 'plain white, blur → solid tint, animations & 3D off'
+      : t === 'mid' ? 'gradient, blur kept, heavy animation off' : 'animated liquid background, everything as designed';
+    updatePill();
     var n = navigator, c = n.connection || {};
     $('sCores').textContent = n.hardwareConcurrency || 'n/a (not Chromium)';
     $('sMem').textContent = n.deviceMemory ? n.deviceMemory + ' GB' : 'n/a (not Chromium)';
@@ -321,6 +382,12 @@ if (CapTier.tier() !== "low") {
   }
   render();
   new MutationObserver(render).observe(document.documentElement, { attributes: true, attributeFilter: ['data-tier'] });
+  $('headerTier').addEventListener('click', function () {
+    var order = ['low', 'mid', 'high'];
+    var cur = CapTier.tier();
+    CapTier.set(order[(order.indexOf(cur) + 1) % 3]);
+    render();
+  });
   document.querySelectorAll('[data-set]').forEach(function (b) {
     b.addEventListener('click', function () { CapTier.set(b.getAttribute('data-set')); render(); });
   });
@@ -350,13 +417,15 @@ if (CapTier.tier() !== "low") {
     frames++;
     if (stressOn) burn(45);
     if (ts - start >= 1000) {
-      $('sFps').textContent = Math.round(frames / ((ts - start) / 1000)) + ' fps' + (stressOn ? ' (stressed)' : '');
+      lastFps = Math.round(frames / ((ts - start) / 1000));
+      $('sFps').textContent = lastFps + ' fps' + (stressOn ? ' (stressed)' : '');
+      updatePill();
       frames = 0; start = ts;
     }
     requestAnimationFrame(fps);
   }
   requestAnimationFrame(fps);
-  // Particle field — JS-gated: animates only when the tier isn't low.
+  // Particle field — JS-gated: animates only when the tier isn't low (and the glisse switch hasn't turned it off).
   var pCanvas = $('particles'), pCtx = pCanvas.getContext('2d'), parts = [], pRunning = false, pRaf = 0;
   function pSize() { var r = pCanvas.getBoundingClientRect(); pCanvas.width = r.width; pCanvas.height = r.height; }
   function pInit() {
@@ -377,7 +446,7 @@ if (CapTier.tier() !== "low") {
     }
   }
   function pStep() {
-    if (CapTier.tier() === 'low') { pRunning = false; return; }
+    if (CapTier.tier() === 'low' || window.__particlesOn === false) { pRunning = false; return; }
     for (var i = 0; i < parts.length; i++) {
       var p = parts[i];
       p.x += p.vx; p.y += p.vy;
@@ -388,13 +457,67 @@ if (CapTier.tier() !== "low") {
     pRaf = requestAnimationFrame(pStep);
   }
   function pSync() {
-    if (CapTier.tier() === 'low') { cancelAnimationFrame(pRaf); pRunning = false; pDraw(); }
+    if (CapTier.tier() === 'low' || window.__particlesOn === false) { cancelAnimationFrame(pRaf); pRunning = false; pDraw(); }
     else if (!pRunning) { pRunning = true; pRaf = requestAnimationFrame(pStep); }
   }
+  window.__pSync = pSync;
   pInit(); pSync();
   new MutationObserver(pSync).observe(document.documentElement, { attributes: true, attributeFilter: ['data-tier'] });
   window.addEventListener('resize', function () { pSize(); pDraw(); });
 })();
+</script>
+<script type="module">
+let glisseRoot = null, glisseLoading = null;
+async function mountGlisse() {
+  if (glisseRoot || glisseLoading) return glisseLoading;
+  glisseLoading = (async () => {
+    const React = await import('react');
+    const { createRoot } = await import('react-dom/client');
+    const { TabBar, Glass, Switch, Slider } = await import('glisse');
+    const e = React.createElement;
+    const { useState, useEffect } = React;
+    function Island() {
+      const [tab, setTab] = useState('glass');
+      const [particlesOn, setParticlesOn] = useState(true);
+      const [speed, setSpeed] = useState(20);
+      useEffect(() => { window.__particlesOn = particlesOn; if (window.__pSync) window.__pSync(); }, [particlesOn]);
+      useEffect(() => { document.documentElement.style.setProperty('--cube-speed', (11 - speed / 10) + 's'); }, [speed]);
+      const text = {
+        glass: 'The selection lens springs between tabs and lifts into a lens while you hold it — glisse computes the refraction per frame.',
+        blur: 'Backdrop blur + saturation tuned to iOS 26 values. On a weak phone this much blur costs real frames — which is why it only mounts on high.',
+        motion: 'Everything here is spring physics, not CSS transitions. Press and drag a tab — the lens follows your finger.'
+      }[tab];
+      return e('div', null,
+        e(TabBar, { items: [{ value: 'glass', label: 'Glass' }, { value: 'blur', label: 'Blur' }, { value: 'motion', label: 'Motion' }], value: tab, onValueChange: setTab }),
+        e(Glass, { style: { borderRadius: 20, padding: 18, marginTop: 14, color: '#fff' } },
+          e('p', { style: { margin: '0 0 14px', fontSize: 15 } }, text),
+          e('div', { style: { display: 'flex', gap: 18, alignItems: 'center', flexWrap: 'wrap' } },
+            e('label', { style: { display: 'flex', gap: 8, alignItems: 'center', fontSize: 14 } },
+              e(Switch, { checked: particlesOn, onCheckedChange: setParticlesOn, 'aria-label': 'Toggle particles' }), 'Particles'),
+            e('div', { style: { flex: 1, minWidth: 160 } },
+              e('div', { style: { fontSize: 13, opacity: .85, marginBottom: 2 } }, 'Cube speed'),
+              e(Slider, { value: speed, onValueChange: setSpeed, min: 0, max: 100 })))));
+    }
+    const host = document.getElementById('glisseIsland');
+    const fb = document.getElementById('glisseFallback');
+    if (fb) fb.style.display = 'none';
+    glisseRoot = createRoot(host);
+    glisseRoot.render(e(Island));
+  })();
+  return glisseLoading;
+}
+function unmountGlisse() {
+  if (glisseRoot) { try { glisseRoot.unmount(); } catch (err) {} glisseRoot = null; }
+  glisseLoading = null;
+  const fb = document.getElementById('glisseFallback');
+  if (fb) fb.style.display = '';
+}
+function syncGlisse() {
+  if (window.CapTier && CapTier.tier() === 'high') mountGlisse();
+  else unmountGlisse();
+}
+syncGlisse();
+new MutationObserver(syncGlisse).observe(document.documentElement, { attributes: true, attributeFilter: ['data-tier'] });
 </script>
 </body>
 </html>

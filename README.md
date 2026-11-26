@@ -73,6 +73,7 @@ cap-tier/
 ├── skills/
 │   └── cap-tier/
 │       └── SKILL.md  # skill for AI agents
+├── vendor/           # React 19.3.1 + glisse 0.6.0 (demo page only, lazy on high)
 └── LICENSE           # MIT
 ```
 
