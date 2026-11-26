@@ -1,3 +1,5 @@
+<p align="center"><a href="README-fa.md">📖 نسخه فارسی</a></p>
+
 <p align="center">
   <img src="logo.svg" alt="cap-tier logo" width="72" height="58">
 </p>
