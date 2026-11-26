@@ -31,6 +31,7 @@ A snippet that sets `data-tier="low|mid|high"` on `<html>` **before first paint*
 - [API](#api)
 - [Why cap-tier](#why-cap-tier)
 - [Documentation](#documentation)
+- [For AI agents](#for-ai-agents)
 - [Bugs and feature requests](#bugs-and-feature-requests)
 - [Contributing](#contributing)
 - [Versioning](#versioning)
@@ -40,7 +41,7 @@ A snippet that sets `data-tier="low|mid|high"` on `<html>` **before first paint*
 
 Several quick start options are available:
 
-- **CDN (easiest — like Bootstrap's CDN):**
+- **CDN (easiest):**
   ```html
   <script src="https://cdn.jsdelivr.net/gh/MrtinMlr/cap-tier@main/cap-tier.min.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/MrtinMlr/cap-tier@main/cap-tier.css">
@@ -67,8 +68,12 @@ cap-tier/
 ├── cap-tier.css      # companion stylesheet (648 B)
 ├── index.html        # docs + interactive demo (GitHub Pages)
 ├── logo.svg          # logo
-├── LICENSE           # MIT
-└── README.md
+├── README.md         # English docs
+├── README-fa.md      # Persian docs (فارسی)
+├── skills/
+│   └── cap-tier/
+│       └── SKILL.md  # skill for AI agents
+└── LICENSE           # MIT
 ```
 
 ## How it works
@@ -112,15 +117,27 @@ if (CapTier.tier() !== "low") {
 
 ## Why cap-tier
 
-The name is the idea: **cap** = capability (how powerful the device is), **tier** = a tier, like Bootstrap's breakpoint tiers — except Bootstrap's tiers switch *layout* by screen width (`xs / sm / md / lg / xl`), and cap-tier's tiers switch *effects* by device power (`low / mid / high`). Same mental model, different axis.
+Weak phones get the same heavy page strong phones get. Hundreds of millions of people browse on ≤2 GB Android devices, yet most sites ship one version to everyone.
 
-Mobile web performance is bad on low-end phones, and hundreds of millions of people browse on ≤2 GB Android devices — yet most sites ship the same heavy experience to everyone. Google built this exact idea in 2019 ("adaptive loading") and the signals it relies on are still Chromium-only, so it never became a standard library. The honest version of the idea is narrow: **it gates effects, not payload.** It will not fix a 2 MB page — it makes a well-built page cheaper to render on a weak phone.
+cap-tier doesn't change how much a page downloads — it changes how much rendering work a page does on a weak device: it turns off blur, heavy animation and 3D, and skips heavy imports.
 
-The name `cap-tier` was checked before publishing: no JavaScript library or CSS framework uses it, no npm package exists under that name, and the only GitHub repository with that exact name is this one. (The phrase "cap tier" also exists in finance, for market-capitalization tiers — a different world, unrelated to this project.)
+The name is the idea: **cap** = capability (how powerful the device is), **tier** = a level — three tiers, `low` / `mid` / `high`.
+
+The honest limit: it gates effects, not payload. It will not fix a 2 MB page — it makes a well-built page cheaper to render on a weak phone.
 
 ## Documentation
 
 cap-tier's documentation is the demo page in this repo, hosted on GitHub Pages at <https://mrtinmlr.github.io/cap-tier/> — interactive demo, stress test, and copy-paste install snippets included.
+
+## For AI agents
+
+If you work with an AI agent, install the cap-tier skill so it knows how to use this tool:
+
+```sh
+npx skills add MrtinMlr/cap-tier
+```
+
+The skill lives in [`skills/cap-tier/SKILL.md`](skills/cap-tier/SKILL.md): when to use cap-tier, install, the three-step usage, the API, and the common mistakes.
 
 ## Bugs and feature requests
 
