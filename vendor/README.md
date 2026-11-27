@@ -2,7 +2,7 @@
 
 These files power the **glisse liquid-glass island** on the demo page
 (`index.html`, section "Liquid glass, for real"). They are **not** part of the
-cap-tier library itself — the library stays dependency-free and under 2 KB.
+captier library itself — the library stays dependency-free and under 2 KB.
 
 - `react.mjs`, `jsx-runtime.mjs`, `react-dom.mjs`, `react-dom-client.mjs`,
   `scheduler.mjs` — **React 19.3.1**, jsDelivr `+esm` builds
@@ -13,5 +13,5 @@ cap-tier library itself — the library stays dependency-free and under 2 KB.
   in the bundle and injected at runtime, so no separate CSS file is needed.
 
 The island is loaded **lazily and only when the tier is `high`**
-(`CapTier.tier() === "high"`): on `low`/`mid` none of these files is ever
+(`Captier.tier() === "high"`): on `low`/`mid` none of these files is ever
 fetched. To update, re-download the `+esm` builds and re-apply the rewrites.

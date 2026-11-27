@@ -1,0 +1,11 @@
+/* captier companion CSS — paste after your main stylesheet.
+   Low tier: blur becomes a solid tint, motion/3D off. Mid: blur kept,
+   heavy animation off. High: everything as designed. */
+[data-tier="low"] .glass, [data-tier="low"] .blur, [data-tier="low"] [class*="backdrop"] {
+  backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
+  background: var(--glass-fallback, rgba(20, 20, 24, 0.92)) !important;
+}
+[data-tier="low"] *, [data-tier="mid"] .anim-heavy {
+  animation: none !important; transition-duration: 0.01ms !important;
+}
+[data-tier="low"] .anim-3d, [data-tier="low"] [data-3d] { transform: none !important; }

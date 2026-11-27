@@ -1,26 +1,26 @@
 <p align="center"><a href="README.md">📖 English version</a></p>
 
 <p align="center">
-  <img src="logo.svg" alt="لوگوی cap-tier" width="72" height="58">
+  <img src="logo.svg" alt="لوگوی captier" width="72" height="58">
 </p>
 
-<h1 align="center">cap-tier</h1>
+<h1 align="center">captier</h1>
 
 <p align="center">تیِرهای کوچک قدرت دستگاه برای وب — low و mid و high، زیر ۲ کیلوبایت.</p>
 
 <p align="center">
-  <a href="https://mrtinmlr.github.io/cap-tier/"><strong>دموی زنده را ببینید »</strong></a>
+  <a href="https://mrtinmlr.github.io/captier/"><strong>دموی زنده را ببینید »</strong></a>
 </p>
 
 <p align="center">
-  <a href="https://github.com/MrtinMlr/cap-tier/releases"><img src="https://img.shields.io/badge/version-0.1.0-blue" alt="نسخه 0.1.0"></a>
-  <a href="https://mrtinmlr.github.io/cap-tier/"><img src="https://img.shields.io/badge/demo-live-brightgreen" alt="دموی زنده"></a>
+  <a href="https://github.com/MrtinMlr/captier/releases"><img src="https://img.shields.io/badge/version-0.1.0-blue" alt="نسخه 0.1.0"></a>
+  <a href="https://mrtinmlr.github.io/captier/"><img src="https://img.shields.io/badge/demo-live-brightgreen" alt="دموی زنده"></a>
   <img src="https://img.shields.io/badge/size-1.8%20KB%20min-blueviolet" alt="۱٫۸ کیلوبایت مینیفای‌شده">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green" alt="لایسنس MIT"></a>
 </p>
 
 <p align="center">
-  <img src="banner.jpg" alt="بنر cap-tier — سه ستون شیشه‌ای: LOW و MID و HIGH" width="100%">
+  <img src="banner.jpg" alt="بنر captier — سه ستون شیشه‌ای: LOW و MID و HIGH" width="100%">
 </p>
 
 یک قطعه کد کوچک که قبل از اولین رندر، روی تگ html مقدار data-tier را می‌گذارد: low یا mid یا high. با این کار CSS شما می‌تواند روی گوشی‌های ضعیف بلور، انیمیشن سنگین و سه‌بعدی را خاموش کند و جاوااسکریپت شما می‌تواند ایمپورت‌های سنگین را اصلاً لود نکند. بدون وابستگی، بدون شبکه، بدون مرحله‌ی بیلد.
@@ -31,36 +31,36 @@
 
 - **CDN (راحت‌ترین راه):**
   ```html
-  <script src="https://cdn.jsdelivr.net/gh/MrtinMlr/cap-tier@main/cap-tier.min.js"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/MrtinMlr/cap-tier@main/cap-tier.css">
+  <script src="https://cdn.jsdelivr.net/gh/MrtinMlr/captier@main/captier.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/MrtinMlr/captier@main/captier.css">
   ```
   تگ script را در head و قبل از CSS بگذارید — تیِر باید قبل از اولین رندر ست شود.
-- **دانلود آخرین نسخه:** [cap-tier.zip](https://github.com/MrtinMlr/cap-tier/archive/refs/heads/main.zip)
-- **کلون ریپو:** `git clone https://github.com/MrtinMlr/cap-tier.git`
-- **نصب با npm:** `npm install cap-tier` — اسم در npm آزاد است ولی پکیج هنوز منتشر نشده. تا آن موقع از لینک‌های CDN بالا استفاده کنید.
+- **دانلود آخرین نسخه:** [captier.zip](https://github.com/MrtinMlr/captier/archive/refs/heads/main.zip)
+- **کلون ریپو:** `git clone https://github.com/MrtinMlr/captier.git`
+- **نصب با npm:** `npm install captier` — اسم در npm آزاد است ولی پکیج هنوز منتشر نشده. تا آن موقع از لینک‌های CDN بالا استفاده کنید.
 
-[دموی زنده / مستندات](https://mrtinmlr.github.io/cap-tier/) را ببینید؛ دموی تعاملی، تست استرس و اسنیپت‌های آماده‌ی کپی آن‌جاست.
+[دموی زنده / مستندات](https://mrtinmlr.github.io/captier/) را ببینید؛ دموی تعاملی، تست استرس و اسنیپت‌های آماده‌ی کپی آن‌جاست.
 
 ## وضعیت
 
-**نسخه‌ی 0.1.0 — نمونه‌ی اولیه.** تشخیص تیِر ایستا تست شده (دستگاه ضعیف ۲ هسته و ۲ گیگابایت می‌شود low، دستگاه قوی ۸ هسته و ۸ گیگابایت می‌شود high، با `?cap=low` می‌شود اورراید کرد، و `prefers-reduced-motion` و `saveData` تیِر را low می‌کنند). مسیر افت FPS در مرورگر واقعی تأیید شده (کروم headless، نوامبر ۲۰۲۶: از mid به low زیر بار واقعیِ هر فریم، هم موقع لود و هم با `CapTier.recheck()`). سیگنال‌های ایستا فقط در کرومیوم هستند — مرورگرهای دیگر به مقادیر پیش‌فرضِ میانه برمی‌گردند.
+**نسخه‌ی 0.1.0 — نمونه‌ی اولیه.** تشخیص تیِر ایستا تست شده (دستگاه ضعیف ۲ هسته و ۲ گیگابایت می‌شود low، دستگاه قوی ۸ هسته و ۸ گیگابایت می‌شود high، با `?cap=low` می‌شود اورراید کرد، و `prefers-reduced-motion` و `saveData` تیِر را low می‌کنند). مسیر افت FPS در مرورگر واقعی تأیید شده (کروم headless، نوامبر ۲۰۲۶: از mid به low زیر بار واقعیِ هر فریم، هم موقع لود و هم با `Captier.recheck()`). سیگنال‌های ایستا فقط در کرومیوم هستند — مرورگرهای دیگر به مقادیر پیش‌فرضِ میانه برمی‌گردند.
 
 ## چه چیزی داخل دانلود است
 
 در دانلود این فایل‌ها را پیدا می‌کنید:
 
 ```
-cap-tier/
-├── cap-tier.js       # سورس خوانا (۲٫۶ کیلوبایت)
-├── cap-tier.min.js   # مینیفای‌شده (۱٫۸ کیلوبایت)
-├── cap-tier.css      # استایل همراه (۶۴۸ بایت)
+captier/
+├── captier.js       # سورس خوانا (۲٫۶ کیلوبایت)
+├── captier.min.js   # مینیفای‌شده (۱٫۸ کیلوبایت)
+├── captier.css      # استایل همراه (۶۴۸ بایت)
 ├── index.html        # داک + دموی تعاملی (GitHub Pages)
 ├── logo.svg          # لوگو
 ├── banner.jpg        # بنر
 ├── README.md         # مستندات انگلیسی
 ├── README-fa.md      # مستندات فارسی
 ├── skills/
-│   └── cap-tier/
+│   └── captier/
 │       └── SKILL.md  # اسکیل برای ایجنت‌های هوش مصنوعی
 ├── vendor/           # ری‌اکت ۱۹٫۳٫۱ + glisse 0.6.0 (فقط برای صفحه‌ی دمو، فقط روی high لود می‌شود)
 ├── LICENSE           # MIT
@@ -69,8 +69,8 @@ cap-tier/
 ## چطور کار می‌کند
 
 ۱. **تیِر اولیه (سیگنال‌های ایستا):** تعداد هسته‌ها و حافظه‌ی دستگاه، به‌علاوه‌ی حالت ذخیره‌ی داده و اتصال کند. اگر کاربر کاهش حرکت (prefers-reduced-motion) را فعال کرده باشد، تیِر low می‌شود.
-۲. **چک زمان اجرا (FPS):** حدود ۲ ثانیه نمونه‌برداری بعد از لود صفحه. اگر میانگین FPS زیر ۳۰ باشد، تیِر یک پله پایین می‌آید. فقط پایین می‌رود، هیچ‌وقت بالا نمی‌رود — پس صفحه هیچ‌وقت به افکت‌های سنگین برنمی‌گردد و چشمک نمی‌زند. با `CapTier.recheck()` همین چک را هر وقت بخواهید دوباره اجرا کنید.
-۳. **اورراید دستی برنده است:** با `?cap=low` در آدرس، یا `localStorage`، یا `CapTier.set("low")`. اورراید تیِر را قفل می‌کند و دیگر افت FPS اتفاق نمی‌افتد.
+۲. **چک زمان اجرا (FPS):** حدود ۲ ثانیه نمونه‌برداری بعد از لود صفحه. اگر میانگین FPS زیر ۳۰ باشد، تیِر یک پله پایین می‌آید. فقط پایین می‌رود، هیچ‌وقت بالا نمی‌رود — پس صفحه هیچ‌وقت به افکت‌های سنگین برنمی‌گردد و چشمک نمی‌زند. با `Captier.recheck()` همین چک را هر وقت بخواهید دوباره اجرا کنید.
+۳. **اورراید دستی برنده است:** با `?cap=low` در آدرس، یا `localStorage`، یا `Captier.set("low")`. اورراید تیِر را قفل می‌کند و دیگر افت FPS اتفاق نمی‌افتد.
 
 ## تیِرها
 
@@ -93,23 +93,23 @@ cap-tier/
 
 | فراخوانی | چه می‌کند |
 | --- | --- |
-| `CapTier.tier()` | برمی‌گرداند low یا mid یا high |
-| `CapTier.set("low")` | یک تیِر را اجبار می‌کند و در localStorage ذخیره‌اش می‌کند |
-| `CapTier.recheck()` | چک حدوداً ۲ ثانیه‌ای FPS را دوباره اجرا می‌کند (فقط به سمت پایین) |
+| `Captier.tier()` | برمی‌گرداند low یا mid یا high |
+| `Captier.set("low")` | یک تیِر را اجبار می‌کند و در localStorage ذخیره‌اش می‌کند |
+| `Captier.recheck()` | چک حدوداً ۲ ثانیه‌ای FPS را دوباره اجرا می‌کند (فقط به سمت پایین) |
 | `?cap=low` | اورراید با URL — برای تست عالی است |
 
 ```js
 // کار سنگین را روی دستگاه ضعیف اصلاً لود نکن
-if (CapTier.tier() !== "low") {
+if (Captier.tier() !== "low") {
   import("./heavy-3d.js");
 }
 ```
 
-## چرا cap-tier
+## چرا captier
 
 گوشی‌های ضعیف همان صفحه‌ی سنگین را می‌گیرند که گوشی‌های قوی می‌گیرند. صدها میلیون نفر با گوشی‌های ۲ گیگابایت یا کمتر وب‌گردی می‌کنند و بیشتر سایت‌ها برای همه یک نسخه می‌فرستند.
 
-cap-tier حجم دانلود صفحه را عوض نمی‌کند؛ کار رندر روی دستگاه ضعیف را کم می‌کند: بلور، انیمیشن سنگین و سه‌بعدی را خاموش می‌کند و ایمپورت‌های سنگین را لود نمی‌کند.
+captier حجم دانلود صفحه را عوض نمی‌کند؛ کار رندر روی دستگاه ضعیف را کم می‌کند: بلور، انیمیشن سنگین و سه‌بعدی را خاموش می‌کند و ایمپورت‌های سنگین را لود نمی‌کند.
 
 اسمش هم خودِ ایده است: cap یعنی توان دستگاه، tier یعنی طبقه — سه طبقه: low و mid و high.
 
@@ -117,21 +117,21 @@ cap-tier حجم دانلود صفحه را عوض نمی‌کند؛ کار رن�
 
 ## برای ایجنت‌های هوش مصنوعی
 
-اگر با یک ایجنت هوش مصنوعی کار می‌کنید، اسکیل cap-tier را نصب کنید تا بداند چطور از این ابزار استفاده کند:
+اگر با یک ایجنت هوش مصنوعی کار می‌کنید، اسکیل captier را نصب کنید تا بداند چطور از این ابزار استفاده کند:
 
 ```sh
-npx skills add MrtinMlr/cap-tier
+npx skills add MrtinMlr/captier
 ```
 
-اسکیل در `skills/cap-tier/SKILL.md` است: کی از cap-tier استفاده کند، نصب، سه قدم استفاده، API و اشتباه‌های رایج.
+اسکیل در `skills/captier/SKILL.md` است: کی از captier استفاده کند، نصب، سه قدم استفاده، API و اشتباه‌های رایج.
 
 ## مستندات
 
-مستندات cap-tier همان صفحه‌ی دموی داخل ریپوست که روی GitHub Pages میزبانی می‌شود: <https://mrtinmlr.github.io/cap-tier/> — دموی تعاملی، تست استرس و اسنیپت‌های آماده‌ی نصب هم داخلش هست.
+مستندات captier همان صفحه‌ی دموی داخل ریپوست که روی GitHub Pages میزبانی می‌شود: <https://mrtinmlr.github.io/captier/> — دموی تعاملی، تست استرس و اسنیپت‌های آماده‌ی نصب هم داخلش هست.
 
 ## باگ و درخواست قابلیت
 
-باگ یا درخواست قابلیتی دارید؟ اول ایشوهای باز و بسته را جستجو کنید. اگر مشکل یا ایده‌تان آن‌جا نیست، [یک ایشوی جدید باز کنید](https://github.com/MrtinMlr/cap-tier/issues/new).
+باگ یا درخواست قابلیتی دارید؟ اول ایشوهای باز و بسته را جستجو کنید. اگر مشکل یا ایده‌تان آن‌جا نیست، [یک ایشوی جدید باز کنید](https://github.com/MrtinMlr/captier/issues/new).
 
 ## مشارکت
 
@@ -139,7 +139,7 @@ npx skills add MrtinMlr/cap-tier
 
 ## نسخه‌بندی
 
-برای شفافیت در چرخه‌ی انتشار و حفظ سازگاری با نسخه‌های قبلی، cap-tier تحت [راهنمای Semantic Versioning](https://semver.org/) نگهداری می‌شود. برای تغییرات هر نسخه به [بخش Releases](https://github.com/MrtinMlr/cap-tier/releases) نگاه کنید.
+برای شفافیت در چرخه‌ی انتشار و حفظ سازگاری با نسخه‌های قبلی، captier تحت [راهنمای Semantic Versioning](https://semver.org/) نگهداری می‌شود. برای تغییرات هر نسخه به [بخش Releases](https://github.com/MrtinMlr/captier/releases) نگاه کنید.
 
 ## کپی‌رایت و لایسنس
 

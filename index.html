@@ -3,18 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>cap-tier — tiny capability tiers for the web</title>
-<meta name="description" content="cap-tier sets data-tier low/mid/high on <html> before first paint, so CSS can turn off blur, heavy animation and 3D on weak devices. Under 2 KB, no dependencies.">
-<meta property="og:title" content="cap-tier — tiny capability tiers for the web">
+<title>captier — tiny capability tiers for the web</title>
+<meta name="description" content="captier sets data-tier low/mid/high on <html> before first paint, so CSS can turn off blur, heavy animation and 3D on weak devices. Under 2 KB, no dependencies.">
+<meta property="og:title" content="captier — tiny capability tiers for the web">
 <meta property="og:description" content="Same page. Lighter on weak phones. Sets data-tier low/mid/high on <html> before first paint. Under 2 KB.">
-<meta property="og:image" content="https://mrtinmlr.github.io/cap-tier/banner.jpg">
-<meta property="og:url" content="https://mrtinmlr.github.io/cap-tier/">
+<meta property="og:image" content="https://mrtinmlr.github.io/captier/banner.jpg">
+<meta property="og:url" content="https://mrtinmlr.github.io/captier/">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://mrtinmlr.github.io/cap-tier/banner.jpg">
+<meta name="twitter:image" content="https://mrtinmlr.github.io/captier/banner.jpg">
 <link rel="icon" href="logo.svg" type="image/svg+xml">
-<script src="cap-tier.js"></script>
-<link rel="stylesheet" href="cap-tier.css">
+<script src="captier.js"></script>
+<link rel="stylesheet" href="captier.css">
 <script type="importmap">
 { "imports": {
   "react": "./vendor/react.mjs",
@@ -150,16 +150,16 @@
 <div class="bg-fx" aria-hidden="true"><div class="bg-orb o1"></div><div class="bg-orb o2"></div><div class="bg-orb o3"></div></div>
 <header class="site-header glass">
   <div class="inner">
-    <img src="logo.svg" alt="cap-tier">
+    <img src="logo.svg" alt="captier">
     <nav>
-      <a href="#stage">Stage</a><a href="#liquid">Liquid glass</a><a href="#demo">Demo</a><a href="#install">Install</a><a href="#usage">Usage</a><a href="https://github.com/MrtinMlr/cap-tier">GitHub</a>
+      <a href="#stage">Stage</a><a href="#liquid">Liquid glass</a><a href="#demo">Demo</a><a href="#install">Install</a><a href="#usage">Usage</a><a href="https://github.com/MrtinMlr/captier">GitHub</a>
       <button class="tier-pill" id="headerTier" type="button" title="Click to change tier">… fps · …</button>
     </nav>
   </div>
 </header>
 <main>
   <h1>Same page.<br>Lighter on weak phones.</h1>
-  <p class="lede">cap-tier sets <code>data-tier="low|mid|high"</code> on <code>&lt;html&gt;</code> before first paint, so your CSS can turn off blur, heavy animation and 3D on weak devices — and your JS can skip heavy imports entirely. Under 2&nbsp;KB. No dependencies.</p>
+  <p class="lede">captier sets <code>data-tier="low|mid|high"</code> on <code>&lt;html&gt;</code> before first paint, so your CSS can turn off blur, heavy animation and 3D on weak devices — and your JS can skip heavy imports entirely. Under 2&nbsp;KB. No dependencies.</p>
   <div class="badges">
     <span class="badge">v0.1.0</span><span class="badge">1.8 KB minified</span><span class="badge">MIT</span><span class="badge">no dependencies</span>
   </div>
@@ -211,12 +211,12 @@
         <div class="card glass"><strong>Real 3D</strong><br><span class="note">A spinning cube, preserve-3d. Flat on low.</span></div>
       </div>
     </div>
-    <p class="note">The particles are JS-gated too: they only animate when the tier isn't <code>low</code> — the same <code>if (CapTier.tier() !== "low")</code> pattern you'd use for a 3D library. Watch the live FPS in the header while the stage is running.</p>
+    <p class="note">The particles are JS-gated too: they only animate when the tier isn't <code>low</code> — the same <code>if (Captier.tier() !== "low")</code> pattern you'd use for a 3D library. Watch the live FPS in the header while the stage is running.</p>
   </section>
 
   <section id="liquid">
     <h2>Liquid glass, for real — glisse</h2>
-    <p class="note">This panel is <a href="https://github.com/0kzh/glisse">glisse</a> — Apple's Liquid Glass for the web, as React components. It only mounts on <code>high</code>: the ~300&nbsp;KB of React + glisse in <code>vendor/</code> never downloads on weaker tiers. That's the JS-gating pattern cap-tier is for — skip the heavy import entirely. (expo-glass-effect is the native iOS version for Expo apps — it can't run in a web page at all, so it's not here; glisse is the web equivalent.)</p>
+    <p class="note">This panel is <a href="https://github.com/0kzh/glisse">glisse</a> — Apple's Liquid Glass for the web, as React components. It only mounts on <code>high</code>: the ~300&nbsp;KB of React + glisse in <code>vendor/</code> never downloads on weaker tiers. That's the JS-gating pattern captier is for — skip the heavy import entirely. (expo-glass-effect is the native iOS version for Expo apps — it can't run in a web page at all, so it's not here; glisse is the web equivalent.)</p>
     <div id="glisseIsland" data-theme="dark"></div>
     <div class="card glass" id="glisseFallback">
       <p style="margin:0 0 10px">Glisse isn't loaded on this tier — the heavy components stay unmounted.</p>
@@ -225,7 +225,7 @@
   </section>
 
   <section id="demo">
-    <h2>Live demo — this page is running cap-tier</h2>
+    <h2>Live demo — this page is running captier</h2>
     <div class="card glass">
       <div class="tier" id="tier">…<small id="tierNote"></small></div>
     </div>
@@ -254,7 +254,7 @@
       <div class="btns">
         <button id="stressBtn">▶ Simulate heavy load</button>
       </div>
-      <p class="note" id="stressNote">This burns ~45 ms per frame on purpose, so FPS falls under 30 — then <code>CapTier.recheck()</code> runs and the tier drops one level. It never goes back up (downgrade-only). Turn it off to stop the load; the tier stays where it dropped.</p>
+      <p class="note" id="stressNote">This burns ~45 ms per frame on purpose, so FPS falls under 30 — then <code>Captier.recheck()</code> runs and the tier drops one level. It never goes back up (downgrade-only). Turn it off to stop the load; the tier stays where it dropped.</p>
     </div>
 
     <table>
@@ -270,18 +270,18 @@
     <p>Two tags in <code>&lt;head&gt;</code>. The script <strong>must</strong> come before your CSS so the tier is set before first paint — that's the whole trick.</p>
     <div class="snippet">
       <button data-copy="cdn">Copy</button>
-<pre id="cdn"><code>&lt;script src="https://cdn.jsdelivr.net/gh/MrtinMlr/cap-tier@main/cap-tier.min.js"&gt;&lt;/script&gt;
-&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/MrtinMlr/cap-tier@main/cap-tier.css"&gt;</code></pre>
+<pre id="cdn"><code>&lt;script src="https://cdn.jsdelivr.net/gh/MrtinMlr/captier@main/captier.min.js"&gt;&lt;/script&gt;
+&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/MrtinMlr/captier@main/captier.css"&gt;</code></pre>
     </div>
     <p>Or download the files and self-host:</p>
     <div class="snippet">
       <button data-copy="dl">Copy</button>
-<pre id="dl"><code>git clone https://github.com/MrtinMlr/cap-tier.git
+<pre id="dl"><code>git clone https://github.com/MrtinMlr/captier.git
 # or download the zip:
-# https://github.com/MrtinMlr/cap-tier/archive/refs/heads/main.zip</code></pre>
+# https://github.com/MrtinMlr/captier/archive/refs/heads/main.zip</code></pre>
     </div>
-    <p class="note"><code>npm install cap-tier</code> — the name is free on npm but the package isn't published yet. Until then, the CDN links above are the install.</p>
-    <p>Working with an AI agent? Install the skill so it knows how to use cap-tier: <code>npx skills add MrtinMlr/cap-tier</code> — see <a href="https://github.com/MrtinMlr/cap-tier/blob/main/skills/cap-tier/SKILL.md">skills/cap-tier/SKILL.md</a>.</p>
+    <p class="note"><code>npm install captier</code> — the name is free on npm but the package isn't published yet. Until then, the CDN links above are the install.</p>
+    <p>Working with an AI agent? Install the skill so it knows how to use captier: <code>npx skills add MrtinMlr/captier</code> — see <a href="https://github.com/MrtinMlr/captier/blob/main/skills/captier/SKILL.md">skills/captier/SKILL.md</a>.</p>
   </section>
 
   <section id="usage">
@@ -304,16 +304,16 @@
 /* Or use the built-in classes: .glass, .anim-heavy, .anim-3d */
 
 /* JS: skip heavy work entirely */
-if (CapTier.tier() !== "low") {
+if (Captier.tier() !== "low") {
   import("./heavy-3d.js");
 }</code></pre>
     </div>
     <h3>API</h3>
     <table>
       <tr><th>Call</th><th>Does what</th></tr>
-      <tr><td><code>CapTier.tier()</code></td><td>returns <code>"low" | "mid" | "high"</code></td></tr>
-      <tr><td><code>CapTier.set("low")</code></td><td>forces a tier, remembers it in <code>localStorage</code></td></tr>
-      <tr><td><code>CapTier.recheck()</code></td><td>re-runs the ~2 s FPS check on demand (downgrade-only)</td></tr>
+      <tr><td><code>Captier.tier()</code></td><td>returns <code>"low" | "mid" | "high"</code></td></tr>
+      <tr><td><code>Captier.set("low")</code></td><td>forces a tier, remembers it in <code>localStorage</code></td></tr>
+      <tr><td><code>Captier.recheck()</code></td><td>re-runs the ~2 s FPS check on demand (downgrade-only)</td></tr>
       <tr><td><code>?cap=low</code></td><td>URL override — handy for testing</td></tr>
     </table>
     <p class="note">How the tier is picked: <code>hardwareConcurrency</code> + <code>deviceMemory</code> (+ <code>saveData</code> / slow connection). <code>prefers-reduced-motion: reduce</code> forces <code>low</code>. Chromium-only signals are guarded — other browsers fall back to mid-range defaults. Then a ~2 s FPS sample after load can only drop the tier, never raise it.</p>
@@ -323,29 +323,29 @@ if (CapTier.tier() !== "low") {
   <div class="panel glass">
     <div class="cols">
       <div class="brand">
-        <img src="logo.svg" alt="cap-tier logo">
-        <p>cap-tier — tiny capability tiers for the web. Same page, lighter on weak phones.</p>
+        <img src="logo.svg" alt="captier logo">
+        <p>captier — tiny capability tiers for the web. Same page, lighter on weak phones.</p>
       </div>
       <div>
         <h4>Project</h4>
         <ul>
-          <li><a href="https://github.com/MrtinMlr/cap-tier">GitHub</a></li>
-          <li><a href="https://mrtinmlr.github.io/cap-tier/">Live demo</a></li>
-          <li><a href="https://github.com/MrtinMlr/cap-tier/blob/main/README.md">README (English)</a></li>
-          <li><a href="https://github.com/MrtinMlr/cap-tier/blob/main/README-fa.md">README (فارسی)</a></li>
+          <li><a href="https://github.com/MrtinMlr/captier">GitHub</a></li>
+          <li><a href="https://mrtinmlr.github.io/captier/">Live demo</a></li>
+          <li><a href="https://github.com/MrtinMlr/captier/blob/main/README.md">README (English)</a></li>
+          <li><a href="https://github.com/MrtinMlr/captier/blob/main/README-fa.md">README (فارسی)</a></li>
         </ul>
       </div>
       <div>
         <h4>Help</h4>
         <ul>
-          <li><a href="https://github.com/MrtinMlr/cap-tier/issues">Report a bug</a></li>
-          <li><a href="https://github.com/MrtinMlr/cap-tier/blob/main/skills/cap-tier/SKILL.md">Skill for AI agents</a></li>
-          <li><a href="https://github.com/MrtinMlr/cap-tier/blob/main/LICENSE">MIT License</a></li>
+          <li><a href="https://github.com/MrtinMlr/captier/issues">Report a bug</a></li>
+          <li><a href="https://github.com/MrtinMlr/captier/blob/main/skills/captier/SKILL.md">Skill for AI agents</a></li>
+          <li><a href="https://github.com/MrtinMlr/captier/blob/main/LICENSE">MIT License</a></li>
         </ul>
       </div>
     </div>
     <div class="bottom">
-      cap-tier v0.1.0 — prototype, MIT. This page eats its own dog food: the header, the stage and this footer all run through cap-tier.<br>
+      captier v0.1.0 — prototype, MIT. This page eats its own dog food: the header, the stage and this footer all run through captier.<br>
       Honest limits: this gates effects, not payload — it won't fix a 2 MB page. The FPS path is verified in a real browser (headless Chrome); the static signals are Chromium-only.
     </div>
   </div>
@@ -356,13 +356,13 @@ if (CapTier.tier() !== "low") {
   var stressOn = false;
   var lastFps = null;
   function updatePill() {
-    var t = CapTier.tier();
+    var t = Captier.tier();
     var hp = $('headerTier');
     hp.textContent = (lastFps === null ? '… fps' : lastFps + ' fps') + ' · ' + t;
     hp.className = 'tier-pill ' + t;
   }
   function render() {
-    var t = document.documentElement.getAttribute('data-tier') || CapTier.tier();
+    var t = document.documentElement.getAttribute('data-tier') || Captier.tier();
     $('tier').firstChild.nodeValue = t;
     $('tierNote').textContent = t === 'low' ? 'plain white, blur → solid tint, animations & 3D off'
       : t === 'mid' ? 'gradient, blur kept, heavy animation off' : 'animated liquid background, everything as designed';
@@ -374,7 +374,7 @@ if (CapTier.tier() !== "low") {
     $('sSave').textContent = c.saveData ? 'on' : 'off';
     $('sMotion').textContent = matchMedia('(prefers-reduced-motion: reduce)').matches ? 'reduce' : 'no-preference';
     var q = new URLSearchParams(location.search).get('cap'), st = 'n/a';
-    try { st = localStorage.getItem('cap-tier'); } catch (e) {}
+    try { st = localStorage.getItem('captier'); } catch (e) {}
     $('sOver').textContent = q ? '?cap=' + q : (st ? 'localStorage: ' + st : 'none');
     var locked = !!(q || st);
     $('stressBtn').disabled = locked || t === 'low' || stressOn;
@@ -385,21 +385,21 @@ if (CapTier.tier() !== "low") {
       ? 'Already on low — nothing left to drop to. Clear the override and reload to start over.'
       : stressOn
       ? 'Heavy load running… FPS is under 30, the ~2 s check is sampling. Watch the badge.'
-      : 'This burns ~45 ms per frame on purpose, so FPS falls under 30 — then CapTier.recheck() runs and the tier drops one level. It never goes back up (downgrade-only). Turn it off to stop the load; the tier stays where it dropped.';
+      : 'This burns ~45 ms per frame on purpose, so FPS falls under 30 — then Captier.recheck() runs and the tier drops one level. It never goes back up (downgrade-only). Turn it off to stop the load; the tier stays where it dropped.';
   }
   render();
   new MutationObserver(render).observe(document.documentElement, { attributes: true, attributeFilter: ['data-tier'] });
   $('headerTier').addEventListener('click', function () {
     var order = ['low', 'mid', 'high'];
-    var cur = CapTier.tier();
-    CapTier.set(order[(order.indexOf(cur) + 1) % 3]);
+    var cur = Captier.tier();
+    Captier.set(order[(order.indexOf(cur) + 1) % 3]);
     render();
   });
   document.querySelectorAll('[data-set]').forEach(function (b) {
-    b.addEventListener('click', function () { CapTier.set(b.getAttribute('data-set')); render(); });
+    b.addEventListener('click', function () { Captier.set(b.getAttribute('data-set')); render(); });
   });
   function clearOverride() {
-    try { localStorage.removeItem('cap-tier'); } catch (e) {}
+    try { localStorage.removeItem('captier'); } catch (e) {}
     location.search = '';
   }
   $('clearBtn').addEventListener('click', clearOverride);
@@ -408,7 +408,7 @@ if (CapTier.tier() !== "low") {
   $('stressBtn').addEventListener('click', function () {
     if (stressOn) { stressOn = false; render(); return; }
     stressOn = true; render();
-    CapTier.recheck();
+    Captier.recheck();
   });
   document.querySelectorAll('[data-copy]').forEach(function (b) {
     b.addEventListener('click', function () {
@@ -453,7 +453,7 @@ if (CapTier.tier() !== "low") {
     }
   }
   function pStep() {
-    if (CapTier.tier() === 'low' || window.__particlesOn === false) { pRunning = false; return; }
+    if (Captier.tier() === 'low' || window.__particlesOn === false) { pRunning = false; return; }
     for (var i = 0; i < parts.length; i++) {
       var p = parts[i];
       p.x += p.vx; p.y += p.vy;
@@ -464,7 +464,7 @@ if (CapTier.tier() !== "low") {
     pRaf = requestAnimationFrame(pStep);
   }
   function pSync() {
-    if (CapTier.tier() === 'low' || window.__particlesOn === false) { cancelAnimationFrame(pRaf); pRunning = false; pDraw(); }
+    if (Captier.tier() === 'low' || window.__particlesOn === false) { cancelAnimationFrame(pRaf); pRunning = false; pDraw(); }
     else if (!pRunning) { pRunning = true; pRaf = requestAnimationFrame(pStep); }
   }
   window.__pSync = pSync;
@@ -520,7 +520,7 @@ function unmountGlisse() {
   if (fb) fb.style.display = '';
 }
 function syncGlisse() {
-  if (window.CapTier && CapTier.tier() === 'high') mountGlisse();
+  if (window.Captier && Captier.tier() === 'high') mountGlisse();
   else unmountGlisse();
 }
 syncGlisse();

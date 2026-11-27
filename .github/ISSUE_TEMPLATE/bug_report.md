@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Something in cap-tier doesn't behave as documented
+about: Something in captier doesn't behave as documented
 title: "[bug] "
 labels: bug
 ---
@@ -15,7 +15,7 @@ labels: bug
 
 - Device / browser:
 - Tier shown (`document.documentElement.dataset.tier`):
-- Override used (`?cap=`, `localStorage`, `CapTier.set`):
+- Override used (`?cap=`, `localStorage`, `Captier.set`):
 
 ## Version
 
