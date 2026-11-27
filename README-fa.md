@@ -20,7 +20,7 @@
 </p>
 
 <p align="center">
-  <img src="banner.jpg" alt="بنر captier — سه ستون شیشه‌ای: LOW و MID و HIGH" width="100%">
+  <img src="banner-v2.jpg" alt="بنر captier — سه ستون شیشه‌ای: LOW و MID و HIGH" width="100%">
 </p>
 
 یک قطعه کد کوچک که قبل از اولین رندر، روی تگ html مقدار data-tier را می‌گذارد: low یا mid یا high. با این کار CSS شما می‌تواند روی گوشی‌های ضعیف بلور، انیمیشن سنگین و سه‌بعدی را خاموش کند و جاوااسکریپت شما می‌تواند ایمپورت‌های سنگین را اصلاً لود نکند. بدون وابستگی، بدون شبکه، بدون مرحله‌ی بیلد.
@@ -56,7 +56,7 @@ captier/
 ├── captier.css      # استایل همراه (۶۴۸ بایت)
 ├── index.html        # داک + دموی تعاملی (GitHub Pages)
 ├── logo.svg          # لوگو
-├── banner.jpg        # بنر
+├── banner-v2.jpg        # بنر
 ├── README.md         # مستندات انگلیسی
 ├── README-fa.md      # مستندات فارسی
 ├── skills/

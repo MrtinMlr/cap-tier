@@ -20,7 +20,7 @@
 </p>
 
 <p align="center">
-  <img src="banner.jpg" alt="captier banner — three glass pillars: LOW, MID, HIGH" width="100%">
+  <img src="banner-v2.jpg" alt="captier banner — three glass pillars: LOW, MID, HIGH" width="100%">
 </p>
 
 A snippet that sets `data-tier="low|mid|high"` on `<html>` **before first paint**, so your CSS can turn off blur, heavy animation and 3D on weak devices — and your JS can skip heavy imports entirely. No dependencies, no network, no build step.
@@ -72,7 +72,7 @@ captier/
 ├── captier.css      # companion stylesheet (648 B)
 ├── index.html        # docs + interactive demo (GitHub Pages)
 ├── logo.svg          # logo
-├── banner.jpg        # banner
+├── banner-v2.jpg        # banner
 ├── README.md         # English docs
 ├── README-fa.md      # Persian docs (فارسی)
 ├── skills/
